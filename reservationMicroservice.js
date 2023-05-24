@@ -110,7 +110,7 @@ const reservationService = {
   
   searchFlights: (call, callback) => {
     const { query } = call.request;
-    const searchQuery = `SELECT * FROM flights WHERE destination LIKE '%${query}%' ORDER BY id DESC LIMIT 5`;
+    const searchQuery = `SELECT * FROM flights WHERE destination LIKE '%${query}%' ORDER BY id DESC`;
     connection.query(searchQuery, (error, results) => {
       if (error) {
         console.error(error);

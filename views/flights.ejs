@@ -564,9 +564,9 @@ h2 small {
                 <li>
                     <a href="#">
                         <span class="icon">
-                            <ion-icon name="logo-apple"></ion-icon>
+                          <ion-icon name="airplane-outline"></ion-icon>
                         </span>
-                        <span class="title">Brand Name</span>
+                        <span class="title">Flights</span>
                     </a>
                 </li>
 
@@ -578,52 +578,6 @@ h2 small {
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
-                        </span>
-                        <span class="title">Customers</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="chatbubble-outline"></ion-icon>
-                        </span>
-                        <span class="title">Messages</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="help-outline"></ion-icon>
-                        </span>
-                        <span class="title">Help</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
-                        </span>
-                        <span class="title">Settings</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
-                        </span>
-                        <span class="title">Password</span>
-                    </a>
-                </li>
-
                 <li>
                     <a href="#">
                         <span class="icon">
@@ -656,57 +610,62 @@ h2 small {
 
             <!-- ======================= Cards ================== -->
             <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers">1,504</div>
-                        <div class="cardName">Daily Views</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">80</div>
-                        <div class="cardName">Sales</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cart-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">284</div>
-                        <div class="cardName">Comments</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="chatbubbles-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">$7,842</div>
-                        <div class="cardName">Earning</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cash-outline"></ion-icon>
-                    </div>
-                </div>
-            </div>
+              <div class="card">
+                  <div>
+                      <div class="numbers"><%= flights.length %></div>
+                      <div class="cardName">Flights Numbers</div>
+                  </div>
+                  <div class="iconBx">
+                      <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+              </div>
+          
+              <div class="card">
+                  <div>
+                      <div class="numbers">
+                          <% let canceledFlights = flights.filter(flight => flight.status === "Cancelled"); %>
+                          <%= canceledFlights.length %>
+                      </div>
+                      <div class="cardName">Flight Canceled</div>
+                  </div>
+                  <div class="iconBx">
+                      <ion-icon name="close-outline"></ion-icon>
+                  </div>
+              </div>
+          
+              <div class="card">
+                  <div>
+                      <div class="numbers">
+                          <% let onTimeFlights = flights.filter(flight => flight.status === "On time"); %>
+                          <%= onTimeFlights.length %>
+                      </div>
+                      <div class="cardName">Flight On Time</div>
+                  </div>
+                  <div class="iconBx">
+                      <ion-icon name="checkmark-outline"></ion-icon>
+                  </div>
+              </div>
+          
+              <div class="card">
+                  <div>
+                      <div class="numbers">
+                          <% let boardingFlights = flights.filter(flight => flight.status === "Boarding"); %>
+                          <%= boardingFlights.length %>
+                      </div>
+                      <div class="cardName">Flight Boarding</div>
+                  </div>
+                  <div class="iconBx">
+                      <ion-icon name="airplane-outline"></ion-icon>
+                  </div>
+              </div>
+          </div>          
             <!-- ================ Order Details List ================= -->
             <div class="details">
               <div class="RecentFlights" style="position: relative;background: var(--white);padding: 20px;box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);border-radius: 20px;">
                 <div class="cardHeader">
                   <h2>Recent Flights</h2>
                   <div class="buttons">
-                    <a href="#" class="btn" style="padding: 10px;">View All</a>
+                    <a href="/Flights/All" class="btn" style="padding: 10px;">View All</a>
                     <a href="/Flights/createFlight" class="btn" style="background: #8de02c;padding: 10px;border: none;">Generate One</a>
                   </div>
                 </div>
@@ -720,7 +679,7 @@ h2 small {
                       <div class="col col-4" style="text-align: center;">Status</div>
                       <div class="col col-5" style="text-align: center;">Actions</div>
                     </li>
-                    <% for (let i = 0; i < flights.length; i++) { %>
+                    <% for (let i = 0; i <= 4; i++) { %>
                     <li class="table-row">
                       <div class="col col-1" data-label="Id" style="text-align: center;"><%= flights[i].id %></div>
                       <div class="col col-2" data-label="Airline" style="text-align: center;"><%= flights[i].airline %></div>
@@ -768,7 +727,30 @@ h2 small {
     </div>
 
     <!-- =========== Scripts =========  -->
-    <script src="assets/js/main.js"></script>
+    <script>
+      // add hovered class to selected list item
+      let list = document.querySelectorAll(".navigation li");
+
+      function activeLink() {
+        list.forEach((item) => {
+          item.classList.remove("hovered");
+        });
+        this.classList.add("hovered");
+      }
+
+      list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+      // Menu Toggle
+      let toggle = document.querySelector(".toggle");
+      let navigation = document.querySelector(".navigation");
+      let main = document.querySelector(".main");
+
+      toggle.onclick = function () {
+        navigation.classList.toggle("active");
+        main.classList.toggle("active");
+      };
+
+    </script>
 
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

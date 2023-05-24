@@ -32,7 +32,7 @@
                 <td><%= hotel.reservation_id %></td>
                 <td><%= hotel.hotel_id %></td>
                 <td>
-                    <a style="text-decoration: none;color: red;font-style: oblique;" href="/Flights/Hotels/reservations/delete?id=<%= hotel.id %>">Delete</a>
+                    <button class="deleteBtn" data-id="<%= hotel.id %>">Delete</button>
                 </td>
             </tr>
             <% }); %>
@@ -41,14 +41,36 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         // hotels.js
 
         $(document).ready(function () {
             // Initialize DataTable
             $('#hotelsTable').DataTable();
+
+            // Add event listener for delete buttons
+            $('.deleteBtn').on('click', function () {
+                const reservationId = $(this).data('id');
+                deleteReservation(reservationId);
+            });
         });
 
+        // Function to delete a reservation
+        function deleteReservation(reservationId) {
+            // Send DELETE request using Axios
+            axios.delete(`/Flights/Hotels/reservations/delete?id=${reservationId}`)
+                .then(function (response) {
+                    // Handle success
+                    console.log(response.data);
+                    // Refresh the page to reflect the updated reservations
+                    location.reload();
+                })
+                .catch(function (error) {
+                    // Handle error
+                    console.error(error);
+                });
+        }
     </script>
 </body>
 

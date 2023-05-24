@@ -63,6 +63,7 @@ function generateRandomReservationId() {
   return reservationId;
 }
 
+
 app.get("/Flights", (req, res) => {
   const reservationId = generateRandomReservationId();
   const query = "SELECT * FROM f_reservations";
@@ -85,6 +86,50 @@ app.get("/Flights", (req, res) => {
       }
     });
   });
+});
+
+app.get("/Flights/All", (req, res) => {
+  const reservationId = generateRandomReservationId();
+    clientReservations.searchFlights({}, (err, response) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        //res.json(response.flights);
+        res.render("allflights", {
+          flights: response.flights,
+          reservationId,
+        });
+      }
+  });
+});
+
+// app.js
+
+app.put("/Flights/updateFlightStatus", (req, res) => {
+  const flightId = req.query.id;
+  const newStatus = req.query.status;
+
+  // Perform the update operation based on the flightId and newStatus
+  connection.query(
+    "UPDATE flights SET status = ? WHERE id = ?",
+    [newStatus, flightId],
+    (error, results) => {
+      if (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to update flight status" });
+        return;
+      }
+
+      // Check the number of affected rows to determine if the update was successful
+      if (results.affectedRows === 0) {
+        res.status(404).json({ error: "Flight not found" });
+        return;
+      }
+
+      // Return a response indicating the success of the update
+      res.json({ message: "Flight status updated successfully" });
+    }
+  );
 });
 
 app.get("/Flights/getAllReservations", (req, res) => {
@@ -134,6 +179,8 @@ app.get("/Flights/getFlightReservation", (req, res) => {
     }
   );
 });
+
+
 /**Functions of generation */
 // Function to generate a random airline
 function generateRandomAirline() {
